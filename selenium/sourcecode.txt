@@ -1,42 +1,162 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import java.time.Duration;
+
+public class AddToCartTest {
+    private WebDriver driver;
+
+    @BeforeClass
+    public void setup() {
+        System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
+        driver = new FirefoxDriver();
+    }
+
+
+    @AfterClass
+    public void tearDown() {
+        driver.close();
+    }
+
+
+    @Test
+    public void addToCart() throws InterruptedException {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        driver.get("https://linden-hof.ch/produkt-kategorie/holz/");
+        WebElement dismissLink = driver
+                .findElement(By.xpath("//*[contains(text(),'Verstanden')]"));
+        new Actions(driver)
+                .click(dismissLink)
+                .perform();
+        WebElement cartCountZero = driver
+                .findElement(By.xpath("/html/body/div[1]/div/div/div/a[2]/b"));
+        Assert.assertEquals(cartCountZero.getText().trim(), "0 Artikel");
+        WebElement addItemToCartButton = driver.findElement(By.cssSelector("button[value*='253']"));
+        ((JavascriptExecutor) driver)
+                .executeScript("document.querySelector(\"button[value*='253']\").scrollIntoView({block: 'center'})");
+        new Actions((driver))
+                .click(addItemToCartButton)
+                .perform();
+        Thread.sleep(3000);
+        WebElement cartCountOne = driver
+                .findElement(By.xpath("/html/body/div[1]/div/div/div/a[2]/b"));
+        Assert.assertEquals(cartCountOne.getText().trim(), "1 Artikel");
+    }
+}
+public class LoginConstants {
+    public static final String EMAIL = "test123456@email.com";
+    public static final String PASSWORD = "Test123456";
+}
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import java.time.Duration;
 
 public class LoginTest {
+    private WebDriver driver;
 
-    public void run() {
+    @BeforeClass
+    public void setup() {
         System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
-        WebDriver driver;
         driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
-        driver.get("https://www.selenium.dev/selenium/web/web-form.html");
-        WebElement textBox = driver.findElement(By.id("my-text-id"));
-        WebElement passwordBox = driver.findElement(By.name("my-password"));
-        WebElement submitButton = driver.findElement(By.cssSelector("button[type='submit']"));
+    }
+
+    @AfterClass
+    public void tearDown() {
+        driver.close();
+    }
+
+    @Test(dependsOnGroups = {"register"})
+    public void login() {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        driver.get("https://linden-hof.ch/my-account/");
+        WebElement emailInput = driver.findElement(By.id("username"));
+        WebElement passwordInput = driver.findElement(By.id("password"));
+        WebElement submitButton = driver.findElement(By.name("login"));
         new Actions(driver)
-                .moveToElement(textBox)
-                .sendKeys("Username")
-                .moveToElement(passwordBox)
-                .sendKeys("Password123")
-                .moveToElement(submitButton)
-                .click()
+                .sendKeys(emailInput, LoginConstants.EMAIL)
+                .sendKeys(passwordInput, LoginConstants.PASSWORD)
+                .click(submitButton)
                 .pause(Duration.ofSeconds(1))
                 .perform();
-        WebElement message = driver.findElement(By.id("message"));
-        if (message.getText().equals("Received!")) {
-            System.out.println("Login success");
-        } else {
-            System.out.println("login failed");
-        }
-    }
-}
-public class Main {
-    public static void main(String[] args) {
-        new LoginTest().run();
+
+        WebElement logoutLink = driver.findElement(By.cssSelector("a[href*=\"customer-logout\"]"));
+        Assert.assertNotNull(logoutLink.getText());
     }
 
+
 }
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import java.time.Duration;
+
+public class RegisterTest {
+    private WebDriver driver;
+
+    @BeforeClass
+    public void setup() {
+        System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
+        driver = new FirefoxDriver();
+    }
+
+
+    @AfterClass
+    public void tearDown() {
+        driver.close();
+    }
+
+    @Test(groups = "register")
+    public void register() throws InterruptedException {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        driver.get("https://linden-hof.ch/my-account/");
+        WebElement emailInput = driver.findElement(By.id("reg_email"));
+        WebElement passwordInput = driver.findElement(By.id("reg_password"));
+        WebElement submitButton = driver.findElement(By.name("register"));
+        new Actions(driver)
+                .sendKeys(emailInput, LoginConstants.EMAIL)
+                .sendKeys(passwordInput, LoginConstants.PASSWORD)
+                .click(submitButton)
+                .pause(Duration.ofSeconds(1))
+                .perform();
+
+        WebElement logoutLink = driver.findElement(By.cssSelector("a[href*='customer-logout']"));
+        new Actions(driver).click(logoutLink);
+        Thread.sleep(3000);
+    }
+
+
+}
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<suite parallel="true" name="Ecommerce">
+    <test name="main-flow">
+        <classes>
+            <class name="RegisterTest"/>
+            <class name="LoginTest"/>
+            <class name="AddToCartTest"/>
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->

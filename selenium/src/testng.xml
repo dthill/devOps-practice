@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite parallel="true" name="Ecommerce">
+    <test name="main-flow">
+        <classes>
+            <class name="RegisterTest"/>
+            <class name="LoginTest"/>
+            <class name="AddToCartTest"/>
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->

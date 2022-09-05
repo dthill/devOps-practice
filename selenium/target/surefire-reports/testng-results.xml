@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2022-09-05T20:40:50 CEST" name="Command line suite" finished-at="2022-09-05T20:41:51 CEST" duration-ms="61172">
+    <groups>
+      <group name="register">
+        <method signature="RegisterTest.register()[pri:0, instance:RegisterTest@68e965f5]" name="register" class="RegisterTest"/>
+      </group> <!-- register -->
+    </groups>
+    <test started-at="2022-09-05T20:40:50 CEST" name="Command line test" finished-at="2022-09-05T20:41:51 CEST" duration-ms="61172">
+      <class name="RegisterTest">
+        <test-method is-config="true" signature="setup()[pri:0, instance:RegisterTest@68e965f5]" started-at="2022-09-05T20:41:03 CEST" name="setup" finished-at="2022-09-05T20:41:30 CEST" duration-ms="26807" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="register()[pri:0, instance:RegisterTest@68e965f5]" started-at="2022-09-05T20:41:30 CEST" name="register" finished-at="2022-09-05T20:41:37 CEST" duration-ms="7571" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- register -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:RegisterTest@68e965f5]" started-at="2022-09-05T20:41:37 CEST" name="tearDown" finished-at="2022-09-05T20:41:38 CEST" duration-ms="681" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- RegisterTest -->
+      <class name="LoginTest">
+        <test-method is-config="true" signature="setup()[pri:0, instance:LoginTest@76f2bbc1]" started-at="2022-09-05T20:41:38 CEST" name="setup" finished-at="2022-09-05T20:41:46 CEST" duration-ms="8048" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="login()[pri:0, instance:LoginTest@76f2bbc1]" started-at="2022-09-05T20:41:46 CEST" name="login" depends-on-groups="register" finished-at="2022-09-05T20:41:50 CEST" duration-ms="3660" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- login -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:LoginTest@76f2bbc1]" started-at="2022-09-05T20:41:50 CEST" name="tearDown" finished-at="2022-09-05T20:41:51 CEST" duration-ms="1290" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- LoginTest -->
+      <class name="AddToCartTest">
+        <test-method is-config="true" signature="setup()[pri:0, instance:AddToCartTest@41c2284a]" started-at="2022-09-05T20:40:50 CEST" name="setup" finished-at="2022-09-05T20:40:52 CEST" duration-ms="2484" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="addToCart()[pri:0, instance:AddToCartTest@41c2284a]" started-at="2022-09-05T20:40:52 CEST" name="addToCart" finished-at="2022-09-05T20:41:02 CEST" duration-ms="9406" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addToCart -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:AddToCartTest@41c2284a]" started-at="2022-09-05T20:41:02 CEST" name="tearDown" finished-at="2022-09-05T20:41:03 CEST" duration-ms="1165" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- AddToCartTest -->
+    </test> <!-- Command line test -->
+  </suite> <!-- Command line suite -->
+</testng-results>
