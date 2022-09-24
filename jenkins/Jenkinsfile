@@ -7,12 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                 git url: 'https://github.com/dthill/spring-assessment.git', branch: 'main'
-                step([$class: 'DockerComposeBuilder']): Docker
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
+                sh "docker-compose build"
             }
         }
         stage('Deploy') {

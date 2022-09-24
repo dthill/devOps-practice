@@ -26,6 +26,8 @@ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
 
 sudo apt-get --yes update
 sudo apt-get --yes install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo groupadd docker
+sudo usermod -a -G docker $USER
 sudo apt-get --yes install openjdk-11-jre
 sudo apt-get --yes install jenkins
 sudo usermod -a -G docker jenkins
